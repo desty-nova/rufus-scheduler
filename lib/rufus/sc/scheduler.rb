@@ -340,7 +340,8 @@ module Rufus::Scheduler
     # EmScheduler blocking triggers for the next tick. Not the same thing ...
     #
     def trigger_job(blocking, &block)
-
+      blocking = @options[:blocking] if blocking.nil?
+      
       if blocking
         block.call
       else
@@ -472,7 +473,7 @@ module Rufus::Scheduler
     # 'next_tick'. Else the block will get called via 'defer' (own thread).
     #
     def trigger_job(blocking, &block)
-
+      blocking = @options[:blocking] if blocking.nil?
       m = blocking ? :next_tick : :defer
         #
         # :next_tick monopolizes the EM
